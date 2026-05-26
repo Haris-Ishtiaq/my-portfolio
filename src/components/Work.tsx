@@ -5,32 +5,46 @@ import { MdArrowBack, MdArrowForward } from "react-icons/md";
 
 const projects = [
   {
-    title: "CallHQ",
-    category: "Voice AI Calling Platform",
-    tools: "Voice AI, Calling Automation, CRM Integrations",
-    image: "/images/callhq.png",
-    link: "https://callhq.ai",
+    title: "Shufti Pro",
+    category: "Identity Verification & Fraud Prevention Platform",
+    tools: "Laravel, PHP, MySQL, REST APIs, AWS",
+    image: "/images/shuftipro.png",
+    link: "https://shuftipro.com/",
   },
   {
-    title: "Whatsapp Automation",
-    category: "WABA Application",
-    tools: "WhatsApp Business API, Workflow Automation, Notifications",
-    image: "/images/whatsapp.png",
-    link: "https://whatsapp.callhq.ai",
+    title: "The Fast Lanes",
+    category: "Laravel Web Application",
+    tools: "Laravel, PHP, MySQL, Redis, AWS",
+    image: "/images/mydogsid.png",
+    link: "https://thefastlanes.co/",
   },
   {
-    title: "Broki",
-    category: "Real Estate Platform for FnB Industry",
-    tools: "Property Discovery, Lead Management, Marketplace Workflows",
-    image: "/images/broki.png",
-    link: "https://broki.in",
+    title: "Build Marker",
+    category: "Construction Task Management Tool",
+    tools: "Laravel, PHP, MySQL, REST APIs, Bootstrap",
+    image: "/images/placeholder.webp",
+    link: "https://www.buildmarker.com/",
   },
   {
-    title: "Orrdr.com",
-    category: "Ecommerce Platform and Mobile App",
-    tools: "Ecommerce, Mobile Experience, Order Management",
-    image: "/images/orrdr.png",
-    link: "https://orrdr.com",
+    title: "CareQuorum",
+    category: "Patient Support & Tracking App",
+    tools: "Laravel, PHP, MySQL, REST APIs, Bootstrap",
+    image: "/images/placeholder.webp",
+    link: "https://carequorum.com/",
+  },
+  {
+    title: "MyDogSID",
+    category: "Pet Dog Tracking Application",
+    tools: "CodeIgniter, PHP, MySQL, Bootstrap",
+    image: "/images/fastlanes.png",
+    link: "https://mydogsid.com/",
+  },
+  {
+    title: "OnyxTec Careers",
+    category: "Career Portal with Multi-User Access",
+    tools: "Laravel, PHP, MySQL, Role-Based Access Control",
+    image: "/images/placeholder.webp",
+    link: "https://careers.onyxtec.co/",
   },
 ];
 
@@ -107,7 +121,7 @@ const Work = () => {
                           {project.category}
                         </p>
                         <div className="carousel-tools">
-                          <span className="tools-label">Tools & Features</span>
+                          <span className="tools-label">Tools & Stack</span>
                           <p>{project.tools}</p>
                         </div>
                       </div>

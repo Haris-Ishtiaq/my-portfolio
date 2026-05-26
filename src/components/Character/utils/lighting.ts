@@ -3,21 +3,45 @@ import { RGBELoader } from "three-stdlib";
 import { gsap } from "gsap";
 
 const setLighting = (scene: THREE.Scene) => {
-  const directionalLight = new THREE.DirectionalLight(0x5eead4, 0);
-  directionalLight.intensity = 0;
-  directionalLight.position.set(-0.47, -0.32, -1);
-  directionalLight.castShadow = true;
-  directionalLight.shadow.mapSize.width = 1024;
-  directionalLight.shadow.mapSize.height = 1024;
-  directionalLight.shadow.camera.near = 0.5;
-  directionalLight.shadow.camera.far = 50;
-  scene.add(directionalLight);
+  // ── Key Light ──────────────────────────────────────────────────────────
+  // Warm studio key light from upper-right front — main illumination
+  const keyLight = new THREE.DirectionalLight(0xfff4e0, 0); // warm white ~3200K
+  keyLight.position.set(3, 4.5, 3);
+  keyLight.castShadow = true;
+  keyLight.shadow.mapSize.width = 2048;
+  keyLight.shadow.mapSize.height = 2048;
+  keyLight.shadow.camera.near = 0.5;
+  keyLight.shadow.camera.far = 60;
+  keyLight.shadow.bias = -0.0003;
+  keyLight.shadow.normalBias = 0.02;
+  scene.add(keyLight);
 
-  const pointLight = new THREE.PointLight(0x22d3ee, 0, 100, 3);
-  pointLight.position.set(3, 12, 4);
-  pointLight.castShadow = true;
+  // ── Fill Light ─────────────────────────────────────────────────────────
+  // Soft cool fill from the left — lifts shadows, adds depth
+  const fillLight = new THREE.DirectionalLight(0xc8deff, 0); // soft blue-white
+  fillLight.position.set(-4, 1.5, 2);
+  fillLight.castShadow = false;
+  scene.add(fillLight);
+
+  // ── Rim / Hair Light ───────────────────────────────────────────────────
+  // Warm backlight — separates character from background, adds cartoon pop
+  const rimLight = new THREE.DirectionalLight(0xffd090, 0); // warm golden rim
+  rimLight.position.set(0.5, 2, -4);
+  rimLight.castShadow = false;
+  scene.add(rimLight);
+
+  // ── Screen Glow ────────────────────────────────────────────────────────
+  // Blue-white point light driven by the screen mesh opacity
+  const pointLight = new THREE.PointLight(0x5599ff, 0, 100, 2);
+  pointLight.position.set(0, 12.5, 3.5);
+  pointLight.castShadow = false;
   scene.add(pointLight);
 
+  // ── Ambient base ───────────────────────────────────────────────────────
+  const ambientLight = new THREE.AmbientLight(0x252535, 1.0);
+  scene.add(ambientLight);
+
+  // ── HDR Environment ────────────────────────────────────────────────────
   new RGBELoader()
     .setPath("/models/")
     .load("char_enviorment.hdr?v=2", function (texture) {
@@ -27,25 +51,39 @@ const setLighting = (scene: THREE.Scene) => {
       scene.environmentRotation.set(5.76, 85.85, 1);
     });
 
+  // Driven every frame by screen mesh emissive intensity
   function setPointLight(screenLight: any) {
     if (screenLight.material.opacity > 0.9) {
-      pointLight.intensity = screenLight.material.emissiveIntensity * 20;
+      pointLight.intensity = screenLight.material.emissiveIntensity * 18;
     } else {
       pointLight.intensity = 0;
     }
   }
-  const duration = 2;
+
+  // Animate all lights on with GSAP after loading
+  const duration = 2.2;
   const ease = "power2.inOut";
+
   function turnOnLights() {
     gsap.to(scene, {
-      environmentIntensity: 0.64,
-      duration: duration,
-      ease: ease,
+      environmentIntensity: 0.55,
+      duration,
+      ease,
     });
-    gsap.to(directionalLight, {
-      intensity: 1,
-      duration: duration,
-      ease: ease,
+    gsap.to(keyLight, {
+      intensity: 2.8,
+      duration,
+      ease,
+    });
+    gsap.to(fillLight, {
+      intensity: 0.9,
+      duration,
+      ease,
+    });
+    gsap.to(rimLight, {
+      intensity: 1.4,
+      duration,
+      ease,
     });
     gsap.to(".character-rim", {
       y: "55%",

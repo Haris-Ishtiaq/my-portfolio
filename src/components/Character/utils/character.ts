@@ -23,25 +23,42 @@ const setCharacter = (
         const blobUrl = URL.createObjectURL(new Blob([encryptedBlob]));
 
         let character: THREE.Object3D;
+
         loader.load(
           blobUrl,
           async (gltf) => {
             character = gltf.scene;
             await renderer.compileAsync(character, camera, scene);
+
             character.traverse((child: any) => {
               if (child.isMesh) {
                 const mesh = child as THREE.Mesh;
 
-                // Change clothing colors to match site theme
                 if (mesh.material) {
-                  if (mesh.name === "BODY.SHIRT") { // The shirt mesh
-                    const newMat = (mesh.material as THREE.Material).clone() as THREE.MeshStandardMaterial;
-                    newMat.color = new THREE.Color("#8B4513");
-                    mesh.material = newMat;
-                  } else if (mesh.name === "Pant") {
-                    const newMat = (mesh.material as THREE.Material).clone() as THREE.MeshStandardMaterial;
-                    newMat.color = new THREE.Color("#000000");
-                    mesh.material = newMat;
+                  const applyColor = (hex: string) => {
+                    const m = (mesh.material as THREE.Material).clone() as THREE.MeshStandardMaterial;
+                    m.color = new THREE.Color(hex);
+                    mesh.material = m;
+                  };
+
+                  switch (mesh.name) {
+                    case "BODY.SHIRT":
+                      applyColor("#1e2a38");
+                      break;
+                    case "Pant":
+                      applyColor("#111827");
+                      break;
+                    case "CAP.001":
+                    case "CAP.002":
+                      applyColor("#0d0d0d");
+                      break;
+                    case "Hair":
+                      applyColor("#0f0a06");
+                      (mesh.material as THREE.MeshStandardMaterial).roughness = 0.85;
+                      break;
+                    case "Eyebrow":
+                      applyColor("#0a0602");
+                      break;
                   }
                 }
 
@@ -50,13 +67,12 @@ const setCharacter = (
                 mesh.frustumCulled = true;
               }
             });
+
             resolve(gltf);
             setCharTimeline(character, camera);
             setAllTimeline();
             character!.getObjectByName("footR")!.position.y = 3.36;
             character!.getObjectByName("footL")!.position.y = 3.36;
-
-            // Monitor scale is handled by GsapScroll.ts animations
 
             dracoLoader.dispose();
           },
