@@ -25,7 +25,10 @@ const imageUrls = [
   "/images/github.png",      "/images/nginx.png",
   "/images/aws.png",         "/images/digitalocean.png",
   "/images/cursor.png",      "/images/claude.png",
-  "/images/antigravity.png",
+  "/images/antigravity.png", "/images/livewire.svg",
+  "/images/symfony.svg",     "/images/gadget.svg",
+  "/images/mqtt.svg",        "/images/stripe.svg",
+  "/images/twilio.svg",      "/images/pusher.svg",
 ];
 
 const techNames = [
@@ -34,6 +37,8 @@ const techNames = [
   "MySQL","MongoDB","PostgreSQL","Firebase","SQLite",
   "Docker","Redis","Git","GitHub","Nginx",
   "AWS","DigitalOcean","Cursor","Claude","Antigravity",
+  "Livewire","Symfony","Gadget.dev","MQTT","Stripe",
+  "Twilio","Pusher",
 ];
 
 const techCategories = [
@@ -42,6 +47,8 @@ const techCategories = [
   "Database","Database","Database","Database","Database",
   "DevOps","Caching","Version Control","Version Control","Web Server",
   "Cloud","Cloud","AI IDE","AI Assistant","🚀",
+  "Framework","Framework","Platform","Protocol","Payments",
+  "Communications","Real-time",
 ];
 
 /* ── textures (module-level, created once) ─────────────────── */
@@ -75,7 +82,7 @@ const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
 const scaleOptions = [
   1, 0.85, 0.9, 1, 0.8, 0.95, 0.75, 0.9, 1, 0.8,
   0.95, 1, 0.85, 0.75, 0.9, 1, 0.85, 0.8, 0.9, 0.95, 1, 0.75,
-  0.9, 1, 0.85,
+  0.9, 1, 0.85, 0.9, 0.95, 0.8, 0.85, 1, 0.9, 0.85,
 ];
 
 const r = THREE.MathUtils.randFloatSpread;
