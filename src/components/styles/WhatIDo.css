@@ -10,6 +10,7 @@
   max-width: 1920px;
   margin: auto;
   z-index: 9;
+  transform: translateX(-50px);
 }
 .what-box {
   width: 50%;
